@@ -923,50 +923,50 @@ NSTimer *durationTimer;
 
 #pragma mark - Show using new window
 
-- (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Success];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Success];
 }
 
-- (void)showError:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showError:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Error];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Error];
 }
 
-- (void)showNotice:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showNotice:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Notice];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Notice];
 }
 
-- (void)showWarning:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showWarning:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Warning];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Warning];
 }
 
-- (void)showInfo:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showInfo:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Info];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Info];
 }
 
-- (void)showEdit:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showEdit:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Edit];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Edit];
 }
 
-- (void)showTitle:(NSString *)title subTitle:(NSString *)subTitle style:(SCLAlertViewStyle)style closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showTitle:(NSString *)title subTitle:(NSString *)subTitle style:(SCLAlertViewStyle)style color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:style];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:style];
 }
 
-- (void)showCustom:(UIImage *)image color:(UIColor *)color title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showCustom:(UIImage *)image color:(UIColor *)color title:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
-    [self showTitle:nil image:image color:color title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Custom];
+    [self showTitle:nil image:image color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Custom];
 }
 
-- (void)showWaiting:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showWaiting:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
     [self addActivityIndicatorView];
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Waiting];
+    [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Waiting];
 }
 
 #pragma mark - Visibility
