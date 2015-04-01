@@ -958,7 +958,7 @@ NSTimer *durationTimer;
     [self showTitle:nil image:nil color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:style];
 }
 
-- (void)showCustom:(UIImage *)image color:(UIColor *)color title:(NSString *)title subTitle:(NSString *)subTitle color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showCustom:(UIImage *)image color:(UIColor *)color iconColor:(UIColor *)iconColor borderColor:(UIColor *)borderColor title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
     [self showTitle:nil image:image color:color iconColor:iconColor borderColor:borderColor title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Custom];
 }
