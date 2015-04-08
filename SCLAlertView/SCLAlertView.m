@@ -709,6 +709,16 @@ NSTimer *durationTimer;
         viewColor = _customViewColor;
     }
 
+    if(!iconColor)
+    {
+        iconColor = viewColor;
+    }
+
+    if(!borderColor)
+    {
+        borderColor = viewColor;
+    }
+
     // Title
     if([title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0)
     {
