@@ -1022,7 +1022,7 @@ NSTimer *durationTimer;
 
 - (BOOL)isAppExtension
 {
-    return [[[NSBundle mainBundle] executablePath] containsString:@".appex/"];
+    return [[[NSBundle mainBundle] executablePath] rangeOfString:@".appex/"].location != NSNotFound;
 }
 
 #pragma mark - Background Effects
