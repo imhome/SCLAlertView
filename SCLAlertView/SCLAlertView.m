@@ -866,8 +866,9 @@ NSTimer *durationTimer;
         {
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
-        btn.defaultBackgroundColor = viewColor;
-
+        if (!btn.defaultBackgroundColor) {
+            btn.defaultBackgroundColor = viewColor;
+        }
         if (btn.completeButtonFormatBlock != nil)
         {
             [btn parseConfig:btn.completeButtonFormatBlock()];
