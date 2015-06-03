@@ -11,7 +11,12 @@
 #import "SCLAlertViewStyleKit.h"
 #import "UIImage+ImageEffects.h"
 #import "SCLMacros.h"
+
+#if defined(__has_feature) && __has_feature(modules)
 @import AVFoundation;
+#else
+#import <AVFoundation/AVFoundation.h>
+#endif
 
 #define KEYBOARD_HEIGHT 80
 #define PREDICTION_BAR_HEIGHT 40
@@ -34,9 +39,11 @@
 @property (nonatomic, strong) UIWindow *previousWindow;
 @property (nonatomic, strong) UIWindow *SCLAlertWindow;
 @property (nonatomic, copy) DismissBlock dismissBlock;
+@property (nonatomic, weak) id<UIGestureRecognizerDelegate> restoreInteractivePopGestureDelegate;
 @property (nonatomic) BOOL canAddObservers;
 @property (nonatomic) BOOL keyboardIsVisible;
 @property (nonatomic) BOOL usingNewWindow;
+@property (nonatomic) BOOL restoreInteractivePopGestureEnabled;
 @property (nonatomic) CGFloat backgroundOpacity;
 @property (nonatomic) CGFloat titleFontSize;
 @property (nonatomic) CGFloat bodyFontSize;
@@ -192,7 +199,7 @@ NSTimer *durationTimer;
 - (void)dealloc
 {
     [self removeObservers];
-    [self enableInteractivePopGesture];
+    [self restoreInteractivePopGesture];
 }
 
 - (void)addObservers
@@ -349,12 +356,14 @@ NSTimer *durationTimer;
     // Disable iOS 7 back gesture
     if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
+        _restoreInteractivePopGestureEnabled = navigationController.interactivePopGestureRecognizer.enabled;
+        _restoreInteractivePopGestureDelegate = navigationController.interactivePopGestureRecognizer.delegate;
         navigationController.interactivePopGestureRecognizer.enabled = NO;
         navigationController.interactivePopGestureRecognizer.delegate = self;
     }
 }
 
-- (void)enableInteractivePopGesture
+- (void)restoreInteractivePopGesture
 {
     UINavigationController *navigationController;
 
@@ -367,11 +376,11 @@ NSTimer *durationTimer;
         navigationController = _rootViewController.navigationController;
     }
 
-    // Disable iOS 7 back gesture
+    // Restore iOS 7 back gesture
     if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
-        navigationController.interactivePopGestureRecognizer.enabled = YES;
-        navigationController.interactivePopGestureRecognizer.delegate = nil;
+        navigationController.interactivePopGestureRecognizer.enabled = _restoreInteractivePopGestureEnabled;
+        navigationController.interactivePopGestureRecognizer.delegate = _restoreInteractivePopGestureDelegate;
     }
 }
 
@@ -761,10 +770,10 @@ NSTimer *durationTimer;
                 NSString *str = subTitle;
                 r = [str boundingRectWithSize:sz options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
             } else {
-                r = [_viewText.attributedText boundingRectWithSize:sz options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+                r = [_viewText.attributedText boundingRectWithSize:sz options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
             }
 
-            CGFloat ht = ceil(r.size.height);
+            CGFloat ht = ceilf(r.size.height);
             if (ht < _subTitleHeight)
             {
                 self.windowHeight -= (_subTitleHeight - ht);
@@ -785,8 +794,8 @@ NSTimer *durationTimer;
         else
         {
             NSAttributedString *str =[[NSAttributedString alloc] initWithString:subTitle attributes:attr];
-            CGRect r = [str boundingRectWithSize:sz options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-            CGFloat ht = ceil(r.size.height) + 10.0f;
+            CGRect r = [str boundingRectWithSize:sz options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+            CGFloat ht = ceilf(r.size.height) + 10.0f;
             if (ht < _subTitleHeight)
             {
                 self.windowHeight -= (_subTitleHeight - ht);
@@ -1274,25 +1283,47 @@ NSTimer *durationTimer;
 
 - (void)slideInFromTop
 {
-    //From Frame
-    CGRect frame = self.backgroundView.frame;
-    frame.origin.y = -self.backgroundView.frame.size.height;
-    self.view.frame = frame;
-
-    [UIView animateWithDuration:0.3f animations:^{
-        self.backgroundView.alpha = _backgroundOpacity;
-
-        //To Frame
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0"))
+    {
+        //From Frame
         CGRect frame = self.backgroundView.frame;
-        frame.origin.y = 0.0f;
+        frame.origin.y = -self.backgroundView.frame.size.height;
         self.view.frame = frame;
 
-        self.view.alpha = 1.0f;
-    } completion:^(BOOL completed) {
-        [UIView animateWithDuration:0.2f animations:^{
-            self.view.center = _backgroundView.center;
+        [UIView animateWithDuration:0.3f animations:^{
+            self.backgroundView.alpha = _backgroundOpacity;
+
+            //To Frame
+            CGRect frame = self.backgroundView.frame;
+            frame.origin.y = 0.0f;
+            self.view.frame = frame;
+
+            self.view.alpha = 1.0f;
+        } completion:^(BOOL completed) {
+            [UIView animateWithDuration:0.2f animations:^{
+                self.view.center = _backgroundView.center;
+            }];
         }];
-    }];
+    }
+    else {
+        //From Frame
+        CGRect frame = self.backgroundView.frame;
+        frame.origin.y = -self.backgroundView.frame.size.height;
+        self.view.frame = frame;
+
+        [UIView animateWithDuration:0.5f delay:0.0f usingSpringWithDamping:0.6f initialSpringVelocity:0.5f options:0 animations:^{
+            self.backgroundView.alpha = _backgroundOpacity;
+
+            //To Frame
+            CGRect frame = self.backgroundView.frame;
+            frame.origin.y = 0.0f;
+            self.view.frame = frame;
+
+            self.view.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+            // nothing
+        }];
+    }
 }
 
 - (void)slideInFromBottom
