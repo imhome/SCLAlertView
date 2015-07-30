@@ -617,6 +617,11 @@ NSTimer *durationTimer;
     if (btn.validationBlock && !btn.validationBlock()) {
         return;
     }
+    if([self isVisible])
+    {
+        [self hideView];
+    }
+
     if (btn.actionType == Block)
     {
         if (btn.actionBlock)
@@ -630,10 +635,6 @@ NSTimer *durationTimer;
     else
     {
         NSLog(@"Unknown action type for button");
-    }
-    if([self isVisible])
-    {
-        [self hideView];
     }
 }
 
@@ -1186,7 +1187,7 @@ NSTimer *durationTimer;
         [self.backgroundView removeFromSuperview];
         if(_usingNewWindow)
         {
-            self.SCLAlertWindow = nil;
+            [self.SCLAlertWindow setHidden:YES];
         }
         else
         {
